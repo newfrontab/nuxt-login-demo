@@ -17,7 +17,7 @@ Looking forward to seeing what you will come up with! Please keep in mind that w
 # Feature - Login form
     # Username and password
     # Input validation with concise error messages
-    # Bruteforce prevention 
+    # Bruteforce prevention
 
 # Feature - Create account form
     # Username, check availability
