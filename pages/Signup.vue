@@ -96,7 +96,6 @@ async function handleSubmit() {
 </script>
 
 <style scoped>
-
 .header-signup {
   text-align: center;
 }
@@ -112,7 +111,7 @@ async function handleSubmit() {
 
 .container-signup {
   max-width: 450px;
-  padding: var(--n-space-l)
+  padding: var(--n-space-l);
 }
 
 .container-password {
