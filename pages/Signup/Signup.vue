@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper-signup">
     <provet-card class="container-signup">
-      <h1>Sign Up</h1>
+      <h1 class="header-signup">Sign Up</h1>
 
       <form class="container-form" @submit.prevent="handleSubmit">
         <provet-input
@@ -96,6 +96,11 @@ async function handleSubmit() {
 </script>
 
 <style scoped>
+
+.header-signup {
+  text-align: center;
+}
+
 .wrapper-signup {
   display: flex;
   flex-direction: column;
