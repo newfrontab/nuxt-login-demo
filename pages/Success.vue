@@ -3,11 +3,20 @@
     <provet-card class="container-success">
       <h1 class="n-typescale-2xl header-success">Signup successful 🥳</h1>
 
-      <div class="">
-        <provet-button class="button-submit" type="button" variant="primary">
-          Login
+      <p class="text-success">
+        You can now sign in to your account. Enjoy your time!
+      </p>
+
+      <NuxtLink to="/login">
+        <provet-button
+          expand
+          class="button-submit"
+          type="button"
+          variant="primary"
+        >
+          Sign in
         </provet-button>
-      </div>
+      </NuxtLink>
     </provet-card>
 
     <div class="pyro">
@@ -23,7 +32,6 @@ import "@/assets/css/fireworksAnimation.scss";
 
 <!-- Import Fireworks animation -->
 
-
 <style scoped lang="scss">
 .wrapper-success {
   display: flex;
@@ -33,12 +41,19 @@ import "@/assets/css/fireworksAnimation.scss";
 }
 
 .container-success {
-  max-width: 400px;
-  z-index: 10;
   position: relative;
+  z-index: 10;
+  max-width: 400px;
+  text-align: center;
 }
 
 .header-success {
+  margin-bottom: 0 !important;
   text-align: center;
+}
+
+.text-success {
+  margin-top: var(--n-space-l);
+  margin-bottom: var(--n-space-xl) !important;
 }
 </style>

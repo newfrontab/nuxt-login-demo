@@ -3,13 +3,16 @@
     <provet-card class="container-signup">
       <h1 class="header-signup">Sign Up</h1>
 
-      <form class="container-form" @submit.prevent="handleSubmit">
+      <form
+        class="container-form"
+        @submit.prevent="handleSubmit"
+        :class="{ disabled: isSubmitting }"
+      >
         <provet-input
           type="email"
           label="Email"
           required
           expand
-          :class="{ disabled: isSubmitting }"
           :error="state.email.errors[0]"
           @input="
             (e: InputEvent) =>
@@ -21,7 +24,6 @@
           label="Password"
           required
           expand
-          :class="{ disabled: isSubmitting }"
           :type="showPassword ? 'text' : 'password'"
           :error="state.password.errors[0]"
           @input="
@@ -34,7 +36,7 @@
           label="Confirm password"
           required
           expand
-          :class="{ disabled: !state.password.value || isSubmitting }"
+          :class="{ disabled: !state.password.value }"
           :type="showPassword ? 'text' : 'password'"
           :error="
             state.confirmPassword.touched && state.password.value
@@ -49,24 +51,35 @@
           "
         />
 
+        <!-- Skipping this due to scope, but just to showcase I've thought about it -->
         <provet-checkbox
           type="checkbox"
-          label="Receive occasional product updates and announcements"
+          label="I want to receive news and updates from Provet."
+        />
+
+        <provet-checkbox
+          type="checkbox"
+          label="I consent to my data being processed in accordance with the GDPR."
           @change="
             (e: Event) =>
-              (receiveUpdates = (e.target as HTMLInputElement).checked)
+              (dataConsentGranted = (e.target as HTMLInputElement).checked)
           "
         />
 
-        <div class="container-submit">
-          <provet-button
-            class="button-submit"
-            type="submit"
-            variant="primary"
-            :loading="isSubmitting"
-          >
-            Sign Up
-          </provet-button>
+        <provet-button
+          class="button-submit"
+          expand
+          type="submit"
+          variant="primary"
+          :loading="isSubmitting"
+          :disabled="!dataConsentGranted"
+        >
+          Sign Up
+        </provet-button>
+
+        <div class="container-link">
+          Already registered?
+          <NuxtLink to="/login"> Login </NuxtLink>
         </div>
       </form>
     </provet-card>
@@ -80,11 +93,11 @@ import { required, email, password } from "@/utils/validation";
 import { useAuth } from "@/composables/useAuth";
 
 const showPassword = ref(false);
-const receiveUpdates = ref(false);
+const dataConsentGranted = ref(false);
 const isSubmitting = ref(false);
 const validateOnInput = ref(false);
 
-const { signup, error: authError } = useAuth();
+const { signup } = useAuth();
 
 const { state, isValid, validateForm } = useValidation({
   rules: {
@@ -97,15 +110,12 @@ const { state, isValid, validateForm } = useValidation({
 
 async function handleSubmit() {
   validateForm();
-  if (!isValid.value) {
+  if (!isValid.value || !dataConsentGranted.value) {
     return;
   }
-
   isSubmitting.value = true;
   try {
-    // TODO: Implement signup logic
     await signup(state.email.value, state.password.value);
-    // Navigate to success page
     navigateTo("/success");
   } catch (error) {
     console.error("Signup failed:", error);
@@ -145,26 +155,6 @@ async function handleSubmit() {
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
-}
-
-.icon-toggle-password {
-  position: absolute;
-  right: 1rem;
-  bottom: 10px;
-  z-index: 10;
-  cursor: pointer;
-  color: var(--provet-color-text-secondary);
-}
-
-.icon-toggle-password:hover {
-  color: var(--provet-color-text-primary);
-}
-
-.container-submit {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
 }
 
 .button-submit {
