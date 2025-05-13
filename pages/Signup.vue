@@ -11,7 +11,10 @@
           expand
           :class="{ disabled: isSubmitting }"
           :error="state.email.errors[0]"
-          @input="(e: InputEvent) => (state.email.value = (e.target as HTMLInputElement).value)"
+          @input="
+            (e: InputEvent) =>
+              (state.email.value = (e.target as HTMLInputElement).value)
+          "
         />
 
         <provet-input
@@ -21,7 +24,10 @@
           :class="{ disabled: isSubmitting }"
           :type="showPassword ? 'text' : 'password'"
           :error="state.password.errors[0]"
-          @input="(e: InputEvent) => (state.password.value = (e.target as HTMLInputElement).value)"
+          @input="
+            (e: InputEvent) =>
+              (state.password.value = (e.target as HTMLInputElement).value)
+          "
         />
 
         <provet-input
@@ -35,13 +41,21 @@
               ? state.confirmPassword.errors[0]
               : null
           "
-          @input="(e: InputEvent) => (state.confirmPassword.value = (e.target as HTMLInputElement).value)"
+          @input="
+            (e: InputEvent) =>
+              (state.confirmPassword.value = (
+                e.target as HTMLInputElement
+              ).value)
+          "
         />
 
         <provet-checkbox
           type="checkbox"
           label="Receive occasional product updates and announcements"
-          @change="(e: Event) => (receiveUpdates = (e.target as HTMLInputElement).checked)"
+          @change="
+            (e: Event) =>
+              (receiveUpdates = (e.target as HTMLInputElement).checked)
+          "
         />
 
         <div class="container-submit">
@@ -60,10 +74,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useValidation } from '@/composables/useValidation';
-import { required, email, password } from '@/utils/validation';
-import { useAuth } from '@/composables/useAuth';
+import { ref } from "vue";
+import { useValidation } from "@/composables/useValidation";
+import { required, email, password } from "@/utils/validation";
+import { useAuth } from "@/composables/useAuth";
 
 const showPassword = ref(false);
 const receiveUpdates = ref(false);
@@ -76,7 +90,7 @@ const { state, isValid, validateForm } = useValidation({
   rules: {
     email: [required, email],
     password: [required, password],
-    confirmPassword: [sameAs('password')],
+    confirmPassword: [sameAs("password")],
   },
   validateOnInput: validateOnInput.value,
 });
@@ -92,9 +106,9 @@ async function handleSubmit() {
     // TODO: Implement signup logic
     await signup(state.email.value, state.password.value);
     // Navigate to success page
-    navigateTo('/success');
+    navigateTo("/success");
   } catch (error) {
-    console.error('Signup failed:', error);
+    console.error("Signup failed:", error);
   } finally {
     isSubmitting.value = false;
   }
@@ -116,14 +130,14 @@ async function handleSubmit() {
 }
 
 .container-signup {
-  max-width: 450px;
   padding: var(--n-space-l);
+  max-width: 450px;
 }
 
 .container-password {
   display: flex;
-  width: 100%;
   position: relative;
+  width: 100%;
 }
 
 .container-form {
@@ -137,9 +151,9 @@ async function handleSubmit() {
   position: absolute;
   right: 1rem;
   bottom: 10px;
+  z-index: 10;
   cursor: pointer;
   color: var(--provet-color-text-secondary);
-  z-index: 10;
 }
 
 .icon-toggle-password:hover {
@@ -148,9 +162,9 @@ async function handleSubmit() {
 
 .container-submit {
   display: flex;
-  width: 100%;
   justify-content: flex-end;
   align-items: center;
+  width: 100%;
 }
 
 .button-submit {

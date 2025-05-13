@@ -12,12 +12,12 @@
 
 <script setup lang="ts"></script>
 
-<style scoped>
+<style scoped lang="scss">
 .wrapper-success {
-  height: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .container-success {
