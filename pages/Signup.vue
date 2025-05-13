@@ -9,6 +9,7 @@
           label="Email"
           required
           expand
+          :class="{ disabled: isSubmitting }"
           :error="state.email.errors[0]"
           @input="(e: InputEvent) => (state.email.value = (e.target as HTMLInputElement).value)"
         />
@@ -17,6 +18,7 @@
           label="Password"
           required
           expand
+          :class="{ disabled: isSubmitting }"
           :type="showPassword ? 'text' : 'password'"
           :error="state.password.errors[0]"
           @input="(e: InputEvent) => (state.password.value = (e.target as HTMLInputElement).value)"
@@ -26,7 +28,7 @@
           label="Confirm password"
           required
           expand
-          :class="{ disabled: !state.password.value }"
+          :class="{ disabled: !state.password.value || isSubmitting }"
           :type="showPassword ? 'text' : 'password'"
           :error="
             state.confirmPassword.touched && state.password.value
@@ -61,11 +63,14 @@
 import { ref } from 'vue';
 import { useValidation } from '@/composables/useValidation';
 import { required, email, password } from '@/utils/validation';
+import { useAuth } from '@/composables/useAuth';
 
 const showPassword = ref(false);
 const receiveUpdates = ref(false);
 const isSubmitting = ref(false);
 const validateOnInput = ref(false);
+
+const { signup, error: authError } = useAuth();
 
 const { state, isValid, validateForm } = useValidation({
   rules: {
@@ -85,6 +90,7 @@ async function handleSubmit() {
   isSubmitting.value = true;
   try {
     // TODO: Implement signup logic
+    await signup(state.email.value, state.password.value);
     // Navigate to success page
     navigateTo('/success');
   } catch (error) {

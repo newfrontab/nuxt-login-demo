@@ -1,13 +1,14 @@
 import { ref } from 'vue';
-import { 
+import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  type User
+  type User,
 } from 'firebase/auth';
-import { auth } from '~/plugins/firebase';
+import { useNuxtApp } from '#app';
 
 export const useAuth = () => {
+  const { $auth } = useNuxtApp();
   const user = ref<User | null>(null);
   const error = ref<string | null>(null);
   const loading = ref(false);
@@ -16,7 +17,11 @@ export const useAuth = () => {
     loading.value = true;
     error.value = null;
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        $auth,
+        email,
+        password
+      );
       user.value = userCredential.user;
       return userCredential.user;
     } catch (e: any) {
@@ -31,7 +36,11 @@ export const useAuth = () => {
     loading.value = true;
     error.value = null;
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        $auth,
+        email,
+        password
+      );
       user.value = userCredential.user;
       return userCredential.user;
     } catch (e: any) {
@@ -46,7 +55,7 @@ export const useAuth = () => {
     loading.value = true;
     error.value = null;
     try {
-      await signOut(auth);
+      await signOut($auth);
       user.value = null;
     } catch (e: any) {
       error.value = e.message;
@@ -62,6 +71,6 @@ export const useAuth = () => {
     loading,
     signup,
     login,
-    logout
+    logout,
   };
-}; 
+};
