@@ -63,6 +63,17 @@
           </provet-button>
         </form>
       </provet-card>
+
+      <div class="github-link">
+        <a href="https://github.com/newfrontab/nuxt-login-demo" target='_blank'>
+          <provet-card>
+            <div class="github-link-content">
+              <img :src="githubIcon" alt="Github" class="button-github-icon" />
+              Github Repository
+            </div>
+          </provet-card>
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -73,6 +84,7 @@ import { useValidation } from "@/composables/useValidation";
 import { required, email } from "@/utils/validation";
 import { useAuthStore } from "@/stores/auth";
 import googleIcon from "@/assets/icons/google.svg";
+import githubIcon from "@/assets/icons/github.svg";
 
 const isSubmittingEmail = ref(false);
 const isSubmittingGoogle = ref(false);
@@ -153,6 +165,18 @@ async function handleGoogleSignIn() {
   justify-content: flex-end;
   align-items: center;
   width: 100%;
+}
+.github-link {
+  padding-top: var(--n-space-l);
+  &-content {
+    display: flex;
+    align-items: center;
+    gap: var(--n-space-m);
+    & > img {
+      width: var(--n-size-icon-l);
+      height: var(--n-size-icon-l);
+    }
+  }
 }
 
 .button-submit {
