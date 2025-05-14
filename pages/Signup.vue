@@ -21,11 +21,9 @@
             "
           />
 
-          <provet-input
+          <PasswordWithVisibilityToggle
             label="Password"
-            required
-            expand
-            :type="showPassword ? 'text' : 'password'"
+            :value="state.password.value"
             :error="state.password.errors[0]"
             @input="
               (e: InputEvent) =>
@@ -37,8 +35,8 @@
             label="Confirm password"
             required
             expand
+            type="password"
             :class="{ disabled: !state.password.value }"
-            :type="showPassword ? 'text' : 'password'"
             :error="
               state.confirmPassword.touched && state.password.value
                 ? state.confirmPassword.errors[0]
@@ -94,7 +92,6 @@ import { useValidation } from "@/composables/useValidation";
 import { required, email, password } from "@/utils/validation";
 import { useAuthStore } from "@/stores/auth";
 
-const showPassword = ref(false);
 const dataConsentGranted = ref(false);
 const isSubmitting = ref(false);
 const validateOnInput = ref(false);

@@ -27,12 +27,8 @@
             "
           />
 
-          <!-- Should be a "show password" button, but slot is not working -->
-          <provet-input
-            label="Password"
-            required
-            expand
-            :type="showPassword ? 'text' : 'password'"
+          <PasswordWithVisibilityToggle
+            :value="state.password.value"
             :error="state.password.errors[0]"
             @input="
               (e: InputEvent) => {
@@ -83,7 +79,6 @@ import { required, email } from "@/utils/validation";
 import { useAuthStore } from "@/stores/auth";
 import googleIcon from "@/assets/icons/google.svg";
 
-const showPassword = ref(false);
 const isSubmittingEmail = ref(false);
 const isSubmittingGoogle = ref(false);
 const validateOnInput = ref(false);
