@@ -10,38 +10,27 @@ Read https://provetcloud.design/web-components/#installation-1 to learn how to u
 
 Looking forward to seeing what you will come up with! Please keep in mind that we're looking for a Senior Frontend Engineer, so the solution should demonstrate such seniority level. Think holistically, outside of the box and do what a Senior would do, you should deliver a concrete solutions that ticks all the boxes, those mentioned in this email and those that you need to think of yourself.
 
-# == TODO ==
-
-## Feature - Login form
-
-    # Username and password
-    # Input validation with concise error messages
-    # Bruteforce prevention
-
-## Feature - Create account form
-
-    # Username, check availability
-    # Password requirements. Atleast 8-12 characters
-
-## Jest or Cypress tests
-
-    == Sign in ==
-    # Should have unclickable "Sign in" button if no credentials are filled in.
-    # Should display error on invalid credentials.
-    # Should navigate to "create account" on link click.
-
-    == Create account ==
-    # Should have unclickable "create account" button if no credentials are filled in.
-    # Should require password restrictions such as 8-12 characters minimum.
-
 # == Comments ==
 
-- Using documented slots in <provet-input /> results in error
+## In this project I've completed
+    == Feature Sign flow ==
+    # Added a Sign in flow with SSO support for Google.
+        # Handling information 
+    # Added a Sign up flow with a success page.
+    # Designed the above mentioned flows using "Provet Cloud" framework
+    # Sign in Session management. Users are remembered once they sinced in.
+        # Configuring life span of user credentials where skipped. Just took them as they came with Firebase SDK.
+    
+    == Firebase API ==
+    # Connected frontend application to Firebase API. It reduces a lot of scope for the task, considering I wanted to build something real instead of faking async API calls.
 
+## Obstructions of the task
+    # Slots in <provet-input/> doesn't work when using as instructed in the documentation.
 
-
-
-# == When deploying to Prod == 
-
-- Allow the new origin publicized
-https://console.cloud.google.com/
+## Further improvements - I'm skipping this because it's too much of a time investment for a potential interview
+    # More frontend safety measures.
+        # Honey pots
+        # Google captcha
+        # Brute force / spam prevention / Timeout on X tries
+    # Connecting the occasional product email functionality for real
+    # More SSO methods such as Facebook, X (formely Twitter), Microsoft etc 

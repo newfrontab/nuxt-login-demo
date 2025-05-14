@@ -52,6 +52,12 @@
             "
           />
 
+          <!-- README: Not connected to anything due to scope -->
+          <provet-checkbox
+            type="checkbox"
+            label="I want occasional emails about new features and updates."
+          />
+
           <provet-checkbox
             type="checkbox"
             label="I consent to my data being processed in accordance with the GDPR."
