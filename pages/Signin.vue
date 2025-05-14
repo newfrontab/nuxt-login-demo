@@ -65,11 +65,11 @@
       </provet-card>
 
       <div class="github-link">
-        <a href="https://github.com/newfrontab/nuxt-login-demo" target='_blank'>
+        <a href="https://github.com/newfrontab/nuxt-login-demo" target="_blank">
           <provet-card>
             <div class="github-link-content">
               <img :src="githubIcon" alt="Github" class="button-github-icon" />
-              Github Repository
+              Github
             </div>
           </provet-card>
         </a>
@@ -156,8 +156,8 @@ async function handleGoogleSignIn() {
 .container-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
+  gap: var(--n-space-m);
+  padding: var(--n-space-m);
 }
 
 .container-submit {
@@ -168,10 +168,14 @@ async function handleGoogleSignIn() {
 }
 .github-link {
   padding-top: var(--n-space-l);
+  & > a {
+    font-weight: var(--n-font-weight-heading);
+    text-decoration: none;
+  }
   &-content {
     display: flex;
     align-items: center;
-    gap: var(--n-space-m);
+    gap: var(--n-space-s);
     & > img {
       width: var(--n-size-icon-l);
       height: var(--n-size-icon-l);
@@ -189,7 +193,7 @@ async function handleGoogleSignIn() {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--n-space-s);
   }
   &-icon {
     width: var(--n-size-icon-l);
