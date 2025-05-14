@@ -25,8 +25,8 @@ Looking forward to seeing what you will come up with! Please keep in mind that w
 
 ## Jest or Cypress tests
 
-    == Login ==
-    # Should have unclickable "login" button if no credentials are filled in.
+    == Sign in ==
+    # Should have unclickable "Sign in" button if no credentials are filled in.
     # Should display error on invalid credentials.
     # Should navigate to "create account" on link click.
 

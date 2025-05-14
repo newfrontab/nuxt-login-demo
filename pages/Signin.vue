@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper-signin">
     <provet-card class="container-signin">
-      <h1 class="header-signin">Login</h1>
+      <h1 class="header-signin">Sign in</h1>
 
       <form class="container-form" @submit.prevent="handleSubmit">
         <provet-input
@@ -17,6 +17,8 @@
           "
         />
 
+
+        <!-- Should be a "show password" button, but slot is not working -->
         <provet-input
           label="Password"
           required
@@ -31,10 +33,7 @@
         />
 
         <!-- Skipping this due to scope, keeping it in just to showcase I've thought about it -->
-        <provet-checkbox
-          type="checkbox"
-          label="Stay signed in"
-        />
+        <provet-checkbox type="checkbox" label="Stay signed in" />
 
         <provet-button
           class="button-submit"
@@ -65,7 +64,7 @@ const showPassword = ref(false);
 const isSubmitting = ref(false);
 const validateOnInput = ref(false);
 
-const { signup, error: authError } = useAuth();
+const { signIn } = useAuth();
 
 const { state, isValid, validateForm } = useValidation({
   rules: {
@@ -83,7 +82,7 @@ async function handleSubmit() {
 
   isSubmitting.value = true;
   try {
-    await signup(state.email.value, state.password.value);
+    await signIn(state.email.value, state.password.value);
     navigateTo("/success");
   } catch (error) {
     console.error("Signup failed:", error);
@@ -123,19 +122,6 @@ async function handleSubmit() {
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
-}
-
-.icon-toggle-password {
-  position: absolute;
-  right: 1rem;
-  bottom: 10px;
-  z-index: 10;
-  cursor: pointer;
-  color: var(--provet-color-text-secondary);
-}
-
-.icon-toggle-password:hover {
-  color: var(--provet-color-text-primary);
 }
 
 .container-submit {

@@ -7,7 +7,7 @@
         You can now sign in to your account. Enjoy your time!
       </p>
 
-      <NuxtLink to="/login">
+      <NuxtLink to="/signin">
         <provet-button
           expand
           class="button-submit"

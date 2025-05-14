@@ -79,7 +79,7 @@
 
         <div class="container-link">
           Already registered?
-          <NuxtLink to="/login"> Login </NuxtLink>
+          <NuxtLink to="/signin"> Signin </NuxtLink>
         </div>
       </form>
     </provet-card>

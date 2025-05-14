@@ -32,7 +32,7 @@ export const useAuth = () => {
     }
   };
 
-  const login = async (email: string, password: string) => {
+  const signIn = async (email: string, password: string) => {
     loading.value = true;
     error.value = null;
     try {
@@ -70,7 +70,7 @@ export const useAuth = () => {
     error,
     loading,
     signup,
-    login,
+    signIn,
     logout,
   };
 };
