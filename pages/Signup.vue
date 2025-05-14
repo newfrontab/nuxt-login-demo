@@ -20,7 +20,6 @@
                 (state.email.value = (e.target as HTMLInputElement).value)
             "
           />
-
           <PasswordWithVisibilityToggle
             label="Password"
             :value="state.password.value"
@@ -30,7 +29,6 @@
                 (state.password.value = (e.target as HTMLInputElement).value)
             "
           />
-
           <provet-input
             label="Confirm password"
             required
@@ -49,13 +47,11 @@
                 ).value)
             "
           />
-
           <!-- README: Not connected to anything due to scope -->
           <provet-checkbox
             type="checkbox"
             label="I want occasional emails about new features and updates."
           />
-
           <provet-checkbox
             type="checkbox"
             label="I consent to my data being processed in accordance with the GDPR."
@@ -64,7 +60,6 @@
                 (dataConsentGranted = (e.target as HTMLInputElement).checked)
             "
           />
-
           <provet-button
             class="button-submit"
             expand
@@ -75,7 +70,6 @@
           >
             Sign Up
           </provet-button>
-
           <div class="container-link">
             Already registered?
             <NuxtLink to="/signin"> Sign in </NuxtLink>
@@ -142,12 +136,6 @@ async function handleSubmit() {
   padding: var(--n-space-l);
   width: 100%;
   max-width: 450px;
-}
-
-.container-password {
-  display: flex;
-  position: relative;
-  width: 100%;
 }
 
 .container-form {

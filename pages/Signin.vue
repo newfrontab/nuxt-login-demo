@@ -12,7 +12,6 @@
           <div v-if="invalidCredentials" class="container-error">
             Wrong email or password, please try again
           </div>
-
           <provet-input
             type="email"
             label="Email"
@@ -26,7 +25,6 @@
               }
             "
           />
-
           <PasswordWithVisibilityToggle
             :value="state.password.value"
             :error="state.password.errors[0]"
@@ -37,7 +35,6 @@
               }
             "
           />
-
           <provet-button
             class="button-submit"
             expand
@@ -47,12 +44,10 @@
           >
             Sign in
           </provet-button>
-
           <div class="container-link">
             Don't have an email account?
             <NuxtLink to="/signup"> Sign up </NuxtLink>
           </div>
-
           <provet-button
             class="button-google"
             expand
@@ -144,12 +139,6 @@ async function handleGoogleSignIn() {
   padding: var(--n-space-l);
   width: 100%;
   max-width: 450px;
-}
-
-.container-password {
-  display: flex;
-  position: relative;
-  width: 100%;
 }
 
 .container-form {
