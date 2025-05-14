@@ -1,4 +1,4 @@
-# == Assignment description ==
+# Assignment description
 
 Create a client-side only rendered Nuxt 3 application that allows people to sign up for a product. The form should contain fields for email and password, which should be required and show an error if no value is entered. The password field should have a way to make the password visible. The user should be able to choose to receive occasional product updates and announcements. Once signed up, they should be presented with a success page.
 
@@ -10,7 +10,7 @@ Read https://provetcloud.design/web-components/#installation-1 to learn how to u
 
 Looking forward to seeing what you will come up with! Please keep in mind that we're looking for a Senior Frontend Engineer, so the solution should demonstrate such seniority level. Think holistically, outside of the box and do what a Senior would do, you should deliver a concrete solutions that ticks all the boxes, those mentioned in this email and those that you need to think of yourself.
 
-# == Comments ==
+# Comments
 
 ## In this project I've completed
 
@@ -29,17 +29,15 @@ Looking forward to seeing what you will come up with! Please keep in mind that w
 
     # Slots in <provet-input/> doesn't work when using as instructed in the documentation, resulting in a suboptimal solution.
 
-## Further improvements - I'm skipping this because it's too much of a time investment for a potential interview
+## Further improvements
+I'm skipping this because due to scope
 
-    == High priority ==
     # Add a "confirm identity" email. User gets an email with a clickable link which confirms their identity and logs them into the site.
-    # E2E and unit testing. Sign up/in processes are usually critical to businesses and worth confirming they work.  
+    # E2E and unit testing. Sign up/in processes are usually critical to businesses and worth confirming they work.
     # Complement with tooltips further explaining the checkboxes and what they mean to the user.
     # More frontend safety measures.
         # Honey pots
         # Google captcha
         # Brute force / spam prevention / Timeout on X tries
-
-    == Minor==
     # More SSO methods such as Facebook, X (formely Twitter), Microsoft etc.
     # Connecting the occasional product email functionality for real.

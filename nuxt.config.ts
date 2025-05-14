@@ -28,4 +28,5 @@ export default defineNuxtConfig({
       firebaseMeasurementId: '', // NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID
     },
   },
+  ssr: false,
 });
