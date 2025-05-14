@@ -30,7 +30,7 @@ Looking forward to seeing what you will come up with! Please keep in mind that w
     # Slots in <provet-input/> doesn't work when using as instructed in the documentation, resulting in a suboptimal solution.
 
 ### Further improvements
-I'm skipping this because due to scope
+I'm skipping this because due to scope. In a real production environment multiple of these points would be high priority.
 
     # Add a "confirm identity" email. User gets an email with a clickable link which confirms their identity and logs them into the site.
     # E2E and unit testing. Sign up/in processes are usually critical to businesses and worth confirming they work.
