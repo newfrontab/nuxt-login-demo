@@ -1,11 +1,16 @@
-import { useAuth } from "@/composables/useAuth";
+import { useAuthStore } from "@/stores/auth";
 
-export default defineNuxtRouteMiddleware((to) => {
-  const { user } = useAuth();
-  // TODO - attempt to login with existing credentials
+export default defineNuxtRouteMiddleware(async (to) => {
+  if (!import.meta.client) {
+    return;
+  }
 
+  const authStore = useAuthStore();
   const unAuthorizedRoutes = ["/signup", "/signin", "/success"];
-  if (!user.value && !unAuthorizedRoutes.includes(to.path)) {
+
+  // Wait for Firebase Auth to initialize
+  await waitForAuthInit();
+  if (!authStore.appUser && !unAuthorizedRoutes.includes(to.path)) {
     return navigateTo("/signin");
-  } 
+  }
 });

@@ -1,75 +1,100 @@
 <template>
   <div class="wrapper-signin">
-    <provet-card class="container-signin">
-      <h1 class="header-signin">Sign in</h1>
+    <div class="container-signin">
+      <provet-card>
+        <h1 class="header-signin">Sign in</h1>
 
-      <form class="container-form" @submit.prevent="handleSubmit">
-        <provet-input
-          type="email"
-          label="Email"
-          required
-          expand
-          :class="{ disabled: isSubmitting }"
-          :error="state.email.errors[0]"
-          @input="
-            (e: InputEvent) =>
-              (state.email.value = (e.target as HTMLInputElement).value)
-          "
-        />
-
-
-        <!-- Should be a "show password" button, but slot is not working -->
-        <provet-input
-          label="Password"
-          required
-          expand
-          :class="{ disabled: isSubmitting }"
-          :type="showPassword ? 'text' : 'password'"
-          :error="state.password.errors[0]"
-          @input="
-            (e: InputEvent) =>
-              (state.password.value = (e.target as HTMLInputElement).value)
-          "
-        />
-
-        <!-- Skipping this due to scope, keeping it in just to showcase I've thought about it -->
-        <provet-checkbox type="checkbox" label="Stay signed in" />
-
-        <provet-button
-          class="button-submit"
-          expand
-          type="submit"
-          variant="primary"
-          :loading="isSubmitting"
+        <form
+          class="container-form"
+          :class="{ disabled: isSubmittingEmail || isSubmittingGoogle }"
+          @submit.prevent="handleSubmit"
         >
-          Sign in
-        </provet-button>
+          <div v-if="invalidCredentials" class="container-error">
+            Wrong email or password, please try again
+          </div>
 
-        <div class="container-link">
-          Don't have an account?
-          <NuxtLink to="/signup"> Sign up </NuxtLink>
-        </div>
-      </form>
-    </provet-card>
+          <provet-input
+            type="email"
+            label="Email"
+            required
+            expand
+            :error="state.email.errors[0]"
+            @input="
+              (e: InputEvent) => {
+                state.email.value = (e.target as HTMLInputElement).value;
+                invalidCredentials = false;
+              }
+            "
+          />
+
+          <!-- Should be a "show password" button, but slot is not working -->
+          <provet-input
+            label="Password"
+            required
+            expand
+            :type="showPassword ? 'text' : 'password'"
+            :error="state.password.errors[0]"
+            @input="
+              (e: InputEvent) => {
+                state.password.value = (e.target as HTMLInputElement).value;
+                invalidCredentials = false;
+              }
+            "
+          />
+
+          <provet-button
+            class="button-submit"
+            expand
+            type="submit"
+            variant="primary"
+            :loading="isSubmittingEmail"
+          >
+            Sign in
+          </provet-button>
+
+          <div class="container-link">
+            Don't have an email account?
+            <NuxtLink to="/signup"> Sign up </NuxtLink>
+          </div>
+
+          <provet-button
+            class="button-google"
+            expand
+            type="button"
+            variant="secondary"
+            :loading="isSubmittingGoogle"
+            @click="handleGoogleSignIn"
+          >
+            <div class="button-google-content">
+              <img :src="googleIcon" alt="Google" class="button-google-icon" />
+              <span class="button-google-text"> Sign in with Google </span>
+            </div>
+          </provet-button>
+        </form>
+      </provet-card>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import { useValidation } from "@/composables/useValidation";
-import { required, email, password } from "@/utils/validation";
-import { useAuth } from "@/composables/useAuth";
+import { required, email } from "@/utils/validation";
+import { useAuthStore } from "@/stores/auth";
+import googleIcon from "@/assets/icons/google.svg";
 
 const showPassword = ref(false);
-const isSubmitting = ref(false);
+const isSubmittingEmail = ref(false);
+const isSubmittingGoogle = ref(false);
 const validateOnInput = ref(false);
+const invalidCredentials = ref(false);
 
-const { signIn } = useAuth();
+const auth = useAuthStore();
 
 const { state, isValid, validateForm } = useValidation({
   rules: {
     email: [required, email],
-    password: [required, password],
+    password: [required],
   },
   validateOnInput: validateOnInput.value,
 });
@@ -79,20 +104,34 @@ async function handleSubmit() {
   if (!isValid.value) {
     return;
   }
-
-  isSubmitting.value = true;
+  isSubmittingEmail.value = true;
   try {
-    await signIn(state.email.value, state.password.value);
-    navigateTo("/success");
+    await auth.signIn(state.email.value, state.password.value);
+    navigateTo("/");
   } catch (error) {
-    console.error("Signup failed:", error);
+    console.error("Signin failed:", error);
+    if (JSON.stringify(error).includes("auth/invalid-credential")) {
+      invalidCredentials.value = true;
+    }
   } finally {
-    isSubmitting.value = false;
+    isSubmittingEmail.value = false;
+  }
+}
+
+async function handleGoogleSignIn() {
+  isSubmittingGoogle.value = true;
+  try {
+    await auth.signInWithGoogle();
+    navigateTo("/");
+  } catch (error) {
+    console.error("Google sign-in failed:", error);
+  } finally {
+    isSubmittingGoogle.value = false;
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .header-signin {
   text-align: center;
 }
@@ -108,6 +147,7 @@ async function handleSubmit() {
 
 .container-signin {
   padding: var(--n-space-l);
+  width: 100%;
   max-width: 450px;
 }
 
@@ -133,5 +173,27 @@ async function handleSubmit() {
 
 .button-submit {
   margin-top: 1rem;
+}
+
+.button-google {
+  margin-top: var(--n-space-m);
+  &-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  &-icon {
+    width: var(--n-size-icon-l);
+    height: var(--n-size-icon-l);
+  }
+  &-text {
+    font-weight: 600; // Aware of "var(--n-font-weight-heading)", but naming is too opinionated.
+  }
+}
+
+.container-error {
+  color: var(--n-color-text-error);
+  font-size: var(--n-font-size-s);
 }
 </style>

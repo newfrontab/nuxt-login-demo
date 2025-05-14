@@ -37,3 +37,11 @@ Looking forward to seeing what you will come up with! Please keep in mind that w
 # == Comments ==
 
 - Using documented slots in <provet-input /> results in error
+
+
+
+
+# == When deploying to Prod == 
+
+- Allow the new origin publicized
+https://console.cloud.google.com/

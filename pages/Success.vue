@@ -18,19 +18,24 @@
         </provet-button>
       </NuxtLink>
     </provet-card>
-
-    <div class="pyro">
-      <div class="before"></div>
-      <div class="after"></div>
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import "@/assets/css/fireworksAnimation.scss";
-</script>
+import initConfetti from "~/utils/animateConfetti";
+import { onMounted, onUnmounted } from "vue";
 
-<!-- Import Fireworks animation -->
+let cleanupConfetti: (() => void) | null = null;
+
+onMounted(() => {
+  cleanupConfetti = initConfetti();
+});
+onUnmounted(() => {
+  if (cleanupConfetti) {
+    cleanupConfetti();
+  }
+});
+</script>
 
 <style scoped lang="scss">
 .wrapper-success {
@@ -48,12 +53,11 @@ import "@/assets/css/fireworksAnimation.scss";
 }
 
 .header-success {
-  margin-bottom: 0 !important;
+  margin-bottom: var(--n-space-l);
   text-align: center;
 }
 
 .text-success {
-  margin-top: var(--n-space-l);
-  margin-bottom: var(--n-space-xl) !important;
+  margin-bottom: var(--n-space-xl);
 }
 </style>

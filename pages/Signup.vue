@@ -1,88 +1,84 @@
 <template>
   <div class="wrapper-signup">
-    <provet-card class="container-signup">
-      <h1 class="header-signup">Sign Up</h1>
+    <div class="container-signup">
+      <provet-card>
+        <h1 class="header-signup">Sign Up</h1>
 
-      <form
-        class="container-form"
-        @submit.prevent="handleSubmit"
-        :class="{ disabled: isSubmitting }"
-      >
-        <provet-input
-          type="email"
-          label="Email"
-          required
-          expand
-          :error="state.email.errors[0]"
-          @input="
-            (e: InputEvent) =>
-              (state.email.value = (e.target as HTMLInputElement).value)
-          "
-        />
-
-        <provet-input
-          label="Password"
-          required
-          expand
-          :type="showPassword ? 'text' : 'password'"
-          :error="state.password.errors[0]"
-          @input="
-            (e: InputEvent) =>
-              (state.password.value = (e.target as HTMLInputElement).value)
-          "
-        />
-
-        <provet-input
-          label="Confirm password"
-          required
-          expand
-          :class="{ disabled: !state.password.value }"
-          :type="showPassword ? 'text' : 'password'"
-          :error="
-            state.confirmPassword.touched && state.password.value
-              ? state.confirmPassword.errors[0]
-              : null
-          "
-          @input="
-            (e: InputEvent) =>
-              (state.confirmPassword.value = (
-                e.target as HTMLInputElement
-              ).value)
-          "
-        />
-
-        <!-- Skipping this due to scope, but just to showcase I've thought about it -->
-        <provet-checkbox
-          type="checkbox"
-          label="I want to receive news and updates from Provet."
-        />
-
-        <provet-checkbox
-          type="checkbox"
-          label="I consent to my data being processed in accordance with the GDPR."
-          @change="
-            (e: Event) =>
-              (dataConsentGranted = (e.target as HTMLInputElement).checked)
-          "
-        />
-
-        <provet-button
-          class="button-submit"
-          expand
-          type="submit"
-          variant="primary"
-          :loading="isSubmitting"
-          :disabled="!dataConsentGranted"
+        <form
+          class="container-form"
+          @submit.prevent="handleSubmit"
+          :class="{ disabled: isSubmitting }"
         >
-          Sign Up
-        </provet-button>
+          <provet-input
+            type="email"
+            label="Email"
+            required
+            expand
+            :error="state.email.errors[0]"
+            @input="
+              (e: InputEvent) =>
+                (state.email.value = (e.target as HTMLInputElement).value)
+            "
+          />
 
-        <div class="container-link">
-          Already registered?
-          <NuxtLink to="/signin"> Signin </NuxtLink>
-        </div>
-      </form>
-    </provet-card>
+          <provet-input
+            label="Password"
+            required
+            expand
+            :type="showPassword ? 'text' : 'password'"
+            :error="state.password.errors[0]"
+            @input="
+              (e: InputEvent) =>
+                (state.password.value = (e.target as HTMLInputElement).value)
+            "
+          />
+
+          <provet-input
+            label="Confirm password"
+            required
+            expand
+            :class="{ disabled: !state.password.value }"
+            :type="showPassword ? 'text' : 'password'"
+            :error="
+              state.confirmPassword.touched && state.password.value
+                ? state.confirmPassword.errors[0]
+                : null
+            "
+            @input="
+              (e: InputEvent) =>
+                (state.confirmPassword.value = (
+                  e.target as HTMLInputElement
+                ).value)
+            "
+          />
+
+          <provet-checkbox
+            type="checkbox"
+            label="I consent to my data being processed in accordance with the GDPR."
+            @change="
+              (e: Event) =>
+                (dataConsentGranted = (e.target as HTMLInputElement).checked)
+            "
+          />
+
+          <provet-button
+            class="button-submit"
+            expand
+            type="submit"
+            variant="primary"
+            :loading="isSubmitting"
+            :disabled="!dataConsentGranted"
+          >
+            Sign Up
+          </provet-button>
+
+          <div class="container-link">
+            Already registered?
+            <NuxtLink to="/signin"> Sign in </NuxtLink>
+          </div>
+        </form>
+      </provet-card>
+    </div>
   </div>
 </template>
 
@@ -90,14 +86,14 @@
 import { ref } from "vue";
 import { useValidation } from "@/composables/useValidation";
 import { required, email, password } from "@/utils/validation";
-import { useAuth } from "@/composables/useAuth";
+import { useAuthStore } from "@/stores/auth";
 
 const showPassword = ref(false);
 const dataConsentGranted = ref(false);
 const isSubmitting = ref(false);
 const validateOnInput = ref(false);
 
-const { signup } = useAuth();
+const auth = useAuthStore();
 
 const { state, isValid, validateForm } = useValidation({
   rules: {
@@ -115,7 +111,7 @@ async function handleSubmit() {
   }
   isSubmitting.value = true;
   try {
-    await signup(state.email.value, state.password.value);
+    await auth.signup(state.email.value, state.password.value);
     navigateTo("/success");
   } catch (error) {
     console.error("Signup failed:", error);
@@ -141,6 +137,7 @@ async function handleSubmit() {
 
 .container-signup {
   padding: var(--n-space-l);
+  width: 100%;
   max-width: 450px;
 }
 
@@ -153,11 +150,11 @@ async function handleSubmit() {
 .container-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
+  gap: var(--n-space-m);
+  padding: var(--n-space-m);
 }
 
 .button-submit {
-  margin-top: 1rem;
+  margin-top: var(--n-space-m);
 }
 </style>
