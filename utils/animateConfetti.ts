@@ -1,3 +1,6 @@
+/**
+ * This is a slightly tweaked copy-paste from codepen to make the success page more fun. Can be ignored for the task.
+ */
 export default function initFireworks() {
   // Type definitions
   interface Position {
@@ -272,11 +275,11 @@ export default function initFireworks() {
       this.confetti = [];
       this.lastUpdated = Date.now();
       this.isRunning = true;
-      
+
       // Store the resize handler so we can remove it later
       this.resizeHandler = Utils.debounce(() => this.resizeCanvas(), 200);
       window.addEventListener("resize", this.resizeHandler);
-      
+
       this.resizeCanvas();
       this.loop();
     }
@@ -350,20 +353,20 @@ export default function initFireworks() {
 
     destroy(): void {
       this.isRunning = false;
-      
+
       // Cancel animation frame
       if (this.animationId) {
         cancelAnimationFrame(this.animationId);
       }
-      
+
       // Remove event listeners
       window.removeEventListener("resize", this.resizeHandler);
-      
+
       // Remove canvas from DOM
       if (this.canvas.parentNode) {
         this.canvas.parentNode.removeChild(this.canvas);
       }
-      
+
       // Clear confetti array
       this.confetti = [];
     }

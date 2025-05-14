@@ -14,23 +14,24 @@ Looking forward to seeing what you will come up with! Please keep in mind that w
 
 ## In this project I've completed
     == Feature Sign flow ==
-    # Added a Sign in flow with SSO support for Google.
-        # Handling information 
+    # Added a Sign in flow using email and password.
+        # Includes an SSO flow using a Google provider.
     # Added a Sign up flow with a success page.
-    # Designed the above mentioned flows using "Provet Cloud" framework
+    # Designed the above mentioned flows using "Provet Cloud" framework.
     # Sign in Session management. Users are remembered once they sinced in.
         # Configuring life span of user credentials where skipped. Just took them as they came with Firebase SDK.
     
     == Firebase API ==
     # Connected frontend application to Firebase API. It reduces a lot of scope for the task, considering I wanted to build something real instead of faking async API calls.
 
-## Obstructions of the task
+### Obstructions of the task
     # Slots in <provet-input/> doesn't work when using as instructed in the documentation.
 
 ## Further improvements - I'm skipping this because it's too much of a time investment for a potential interview
+    # Add a "confirm identity" email. User gets an email with a clickable link which confirms their identity and logs them into the site.
     # More frontend safety measures.
         # Honey pots
         # Google captcha
         # Brute force / spam prevention / Timeout on X tries
-    # Connecting the occasional product email functionality for real
     # More SSO methods such as Facebook, X (formely Twitter), Microsoft etc 
+    # Connecting the occasional product email functionality for real
